@@ -1,0 +1,60 @@
+package com.demirtag.intranet.controller;
+
+import com.demirtag.intranet.model.Holiday;
+import com.demirtag.intranet.repository.HolidayRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/holidays")
+public class HolidayController {
+
+    private final HolidayRepository holidayRepository;
+
+    @Autowired
+    public HolidayController(HolidayRepository holidayRepository) {
+        this.holidayRepository = holidayRepository;
+    }
+
+    @GetMapping
+    public List<Holiday> getAllHolidays() {
+        return holidayRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Holiday getHolidayById(@PathVariable Long id) {
+        return holidayRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Holiday not found with id: " + id));
+    }
+
+    @PostMapping
+    public Holiday createHoliday(@RequestBody Holiday holiday) {
+        return holidayRepository.save(holiday);
+    }
+
+    @PutMapping("/{id}")
+    public Holiday updateHoliday(@PathVariable Long id, @RequestBody Holiday updatedHoliday) {
+        return holidayRepository.findById(id)
+                .map(holiday -> {
+                    holiday.setStartDate(updatedHoliday.getStartDate());
+                    holiday.setEndDate(updatedHoliday.getEndDate());
+                    holiday.setRemainingDays(updatedHoliday.getRemainingDays());
+                    holiday.setVacationWorkdays(updatedHoliday.getVacationWorkdays());
+                    holiday.setReason(updatedHoliday.getReason());
+                    holiday.setConfirmation1(updatedHoliday.isConfirmation1());
+                    holiday.setConfirmation2(updatedHoliday.isConfirmation2());
+                    holiday.setReplacement(updatedHoliday.getReplacement());
+                    holiday.setStatus(updatedHoliday.getStatus());
+                    return holidayRepository.save(holiday);
+                })
+                .orElseThrow(() -> new RuntimeException("Holiday not found with id: " + id));
+    }
+
+
+    @DeleteMapping("/{id}")
+    public void deleteHoliday(@PathVariable Long id) {
+        holidayRepository.deleteById(id);
+    }
+}
