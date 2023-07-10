@@ -2,7 +2,9 @@ package com.demirtag.intranet.controller;
 
 import com.demirtag.intranet.model.Holiday;
 import com.demirtag.intranet.repository.HolidayRepository;
+import com.demirtag.intranet.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,10 +14,12 @@ import java.util.List;
 public class HolidayController {
 
     private final HolidayRepository holidayRepository;
+    private final HolidayService holidayService;
 
     @Autowired
-    public HolidayController(HolidayRepository holidayRepository) {
+    public HolidayController(HolidayRepository holidayRepository, HolidayService holidayService) {
         this.holidayRepository = holidayRepository;
+        this.holidayService = holidayService;
     }
 
     @GetMapping
@@ -30,8 +34,9 @@ public class HolidayController {
     }
 
     @PostMapping
-    public Holiday createHoliday(@RequestBody Holiday holiday) {
-        return holidayRepository.save(holiday);
+    public ResponseEntity<Holiday> createHoliday(@RequestBody Holiday holiday) {
+        Holiday savedHoliday = holidayService.saveHoliday(holiday);
+        return ResponseEntity.ok(savedHoliday);
     }
 
     @PutMapping("/{id}")
