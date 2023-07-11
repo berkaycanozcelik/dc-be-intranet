@@ -3,8 +3,8 @@ package com.demirtag.intranet.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "employee_detail")
-public class EmployeeDetail {
+@Table(name = "user_detail")
+public class UserDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,18 +16,18 @@ public class EmployeeDetail {
 
     private String email;
 
-    @OneToOne(mappedBy = "employeeDetail"
+    @OneToOne(mappedBy = "userDetail"
             , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Employee employee;
+    private User user;
 
-    public EmployeeDetail() {
+    public UserDetail() {
     }
 
-    public EmployeeDetail(String address, String phoneNumber, String email, Employee employee) {
+    public UserDetail(String address, String phoneNumber, String email, User user) {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.employee = employee;
+        this.user = user;
     }
 
     public Long getId() {
@@ -62,22 +62,22 @@ public class EmployeeDetail {
         this.email = email;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
-        return "EmployeeDetail{" +
+        return "UserDetail{" +
                 "id=" + id +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
-                ", employee=" + employee +
+                ", user=" + user +
                 '}';
     }
 }

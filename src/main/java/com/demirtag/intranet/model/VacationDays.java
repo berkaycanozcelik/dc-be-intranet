@@ -14,7 +14,7 @@ public class VacationDays {
 
     @OneToOne(mappedBy = "vacationDays"
             , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Employee employee;
+    private User user;
 
     public VacationDays() {
     }

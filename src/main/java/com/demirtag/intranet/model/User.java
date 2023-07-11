@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "employee")
-public class Employee {
+@Table(name = "user")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,21 +23,21 @@ public class Employee {
     private  String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_detail_id")
-    private EmployeeDetail employeeDetail;
+    @JoinColumn(name = "user_detail_id")
+    private UserDetail userDetail;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vacation_days_id")
     private VacationDays vacationDays;
 
-    @OneToMany(mappedBy = "employee"
+    @OneToMany(mappedBy = "user"
             , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Holiday> holidays;
 
-    public Employee() {
+    public User() {
     }
 
-    public Employee(String name, String lastName, String role) {
+    public User(String name, String lastName, String role) {
         this.name = name;
         this.lastName = lastName;
         this.role = role;
@@ -94,7 +94,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
