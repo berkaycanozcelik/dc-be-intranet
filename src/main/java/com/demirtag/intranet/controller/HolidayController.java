@@ -45,7 +45,6 @@ public class HolidayController {
                 .map(holiday -> {
                     holiday.setStartDate(updatedHoliday.getStartDate());
                     holiday.setEndDate(updatedHoliday.getEndDate());
-                    holiday.setRemainingDays(updatedHoliday.getRemainingDays());
                     holiday.setVacationWorkdays(updatedHoliday.getVacationWorkdays());
                     holiday.setReason(updatedHoliday.getReason());
                     holiday.setConfirmation1(updatedHoliday.isConfirmation1());

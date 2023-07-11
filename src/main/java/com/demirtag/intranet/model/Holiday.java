@@ -11,7 +11,6 @@ public class Holiday {
     private Long id;
     private String startDate;
     private String endDate;
-    private int remainingDays;
     private int vacationWorkdays;
     private String reason;
     private boolean confirmation1;
@@ -19,13 +18,16 @@ public class Holiday {
     private String replacement;
     private String status;
 
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
     public Holiday() {
     }
 
-    public Holiday(String startDate, String endDate, int remainingDays, int vacationWorkdays, String reason, boolean confirmation1, boolean confirmation2, String replacement, String status) {
+    public Holiday(String startDate, String endDate, int vacationWorkdays, String reason, boolean confirmation1, boolean confirmation2, String replacement, String status) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.remainingDays = remainingDays;
         this.vacationWorkdays = vacationWorkdays;
         this.reason = reason;
         this.confirmation1 = confirmation1;
@@ -56,14 +58,6 @@ public class Holiday {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
-    }
-
-    public int getRemainingDays() {
-        return remainingDays;
-    }
-
-    public void setRemainingDays(int remainingDays) {
-        this.remainingDays = remainingDays;
     }
 
     public int getVacationWorkdays() {
@@ -120,7 +114,6 @@ public class Holiday {
                 "id=" + id +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
-                ", remainingDays=" + remainingDays +
                 ", vacationWorkdays=" + vacationWorkdays +
                 ", reason='" + reason + '\'' +
                 ", confirmation1=" + confirmation1 +
