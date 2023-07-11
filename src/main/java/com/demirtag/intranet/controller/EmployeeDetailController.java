@@ -1,12 +1,9 @@
 package com.demirtag.intranet.controller;
 
 import com.demirtag.intranet.model.EmployeeDetail;
-import com.demirtag.intranet.repository.EmployeeDetailRepository;
-import com.demirtag.intranet.repository.EmployeeRepository;
 import com.demirtag.intranet.service.EmployeeDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
