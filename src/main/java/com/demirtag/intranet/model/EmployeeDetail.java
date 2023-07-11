@@ -30,6 +30,14 @@ public class EmployeeDetail {
         this.employee = employee;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -52,6 +60,14 @@ public class EmployeeDetail {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override
