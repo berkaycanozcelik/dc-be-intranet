@@ -5,6 +5,7 @@ import com.demirtag.intranet.repository.HolidayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,10 @@ public class HolidayService {
 
     public Holiday createHoliday(Holiday holiday) {
         return holidayRepository.save(holiday);
+    }
+
+    public List<Holiday> getAllHolidays() {
+        return holidayRepository.findAll();
     }
 
     public Optional<Holiday> getHoliday(Long id) {

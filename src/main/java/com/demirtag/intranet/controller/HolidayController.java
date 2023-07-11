@@ -3,6 +3,7 @@ package com.demirtag.intranet.controller;
 import com.demirtag.intranet.model.Holiday;
 import com.demirtag.intranet.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +22,10 @@ public class HolidayController {
         this.holidayService = holidayService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Holiday> createHoliday(@RequestBody Holiday holiday) {
-        Holiday savedHoliday = holidayService.createHoliday(holiday);
-        return ResponseEntity.ok(savedHoliday);
+
+    @GetMapping
+    public List<Holiday> getAllHolidays() {
+        return holidayService.getAllHolidays();
     }
 
     @GetMapping("/{id}")
@@ -33,23 +34,18 @@ public class HolidayController {
         return holiday.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PostMapping
+    public ResponseEntity<Holiday> createHoliday(@RequestBody Holiday holiday) {
+        Holiday createdHoliday = holidayService.createHoliday(holiday);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdHoliday);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Holiday> updateHoliday(@PathVariable Long id, @RequestBody Holiday holiday) {
-        Optional<Holiday> existingHoliday = holidayService.getHoliday(id);
-        if (existingHoliday.isPresent()) {
-            holiday.setId(id);
-            Holiday updatedHoliday = holidayService.updateHoliday(holiday);
-            return ResponseEntity.ok(updatedHoliday);
-        }
-        return ResponseEntity.notFound().build();
+        holiday.setId(id);
+        Holiday updatedHoliday = holidayService.updateHoliday(holiday);
+        return ResponseEntity.ok(updatedHoliday);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteHoliday(@PathVariable Long id) {
-        if (holidayService.deleteHoliday(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
-    }
-
+//write me
 }
