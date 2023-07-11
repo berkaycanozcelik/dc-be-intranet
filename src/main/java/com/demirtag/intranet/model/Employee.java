@@ -18,6 +18,10 @@ public class Employee {
 
     private String role;
 
+    private String username;
+
+    private  String password;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_detail_id")
     private EmployeeDetail employeeDetail;
@@ -72,13 +76,30 @@ public class Employee {
         this.role = role;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", role='" + role + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }
