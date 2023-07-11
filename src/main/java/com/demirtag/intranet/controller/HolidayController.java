@@ -1,64 +1,55 @@
 package com.demirtag.intranet.controller;
 
 import com.demirtag.intranet.model.Holiday;
-import com.demirtag.intranet.repository.HolidayRepository;
 import com.demirtag.intranet.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/holidays")
 public class HolidayController {
 
-    private final HolidayRepository holidayRepository;
     private final HolidayService holidayService;
 
     @Autowired
-    public HolidayController(HolidayRepository holidayRepository, HolidayService holidayService) {
-        this.holidayRepository = holidayRepository;
+    public HolidayController( HolidayService holidayService) {
         this.holidayService = holidayService;
     }
 
-    @GetMapping
-    public List<Holiday> getAllHolidays() {
-        return holidayRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Holiday getHolidayById(@PathVariable Long id) {
-        return holidayRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Holiday not found with id: " + id));
-    }
-
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Holiday> createHoliday(@RequestBody Holiday holiday) {
-        Holiday savedHoliday = holidayService.saveHoliday(holiday);
+        Holiday savedHoliday = holidayService.createHoliday(holiday);
         return ResponseEntity.ok(savedHoliday);
     }
 
-    @PutMapping("/{id}")
-    public Holiday updateHoliday(@PathVariable Long id, @RequestBody Holiday updatedHoliday) {
-        return holidayRepository.findById(id)
-                .map(holiday -> {
-                    holiday.setStartDate(updatedHoliday.getStartDate());
-                    holiday.setEndDate(updatedHoliday.getEndDate());
-                    holiday.setVacationWorkdays(updatedHoliday.getVacationWorkdays());
-                    holiday.setReason(updatedHoliday.getReason());
-                    holiday.setConfirmation1(updatedHoliday.isConfirmation1());
-                    holiday.setConfirmation2(updatedHoliday.isConfirmation2());
-                    holiday.setReplacement(updatedHoliday.getReplacement());
-                    holiday.setStatus(updatedHoliday.getStatus());
-                    return holidayRepository.save(holiday);
-                })
-                .orElseThrow(() -> new RuntimeException("Holiday not found with id: " + id));
+    @GetMapping("/{id}")
+    public ResponseEntity<Holiday> getHoliday(@PathVariable Long id) {
+        Optional<Holiday> holiday = holidayService.getHoliday(id);
+        return holiday.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Holiday> updateHoliday(@PathVariable Long id, @RequestBody Holiday holiday) {
+        Optional<Holiday> existingHoliday = holidayService.getHoliday(id);
+        if (existingHoliday.isPresent()) {
+            holiday.setId(id);
+            Holiday updatedHoliday = holidayService.updateHoliday(holiday);
+            return ResponseEntity.ok(updatedHoliday);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
     @DeleteMapping("/{id}")
-    public void deleteHoliday(@PathVariable Long id) {
-        holidayRepository.deleteById(id);
+    public ResponseEntity<Void> deleteHoliday(@PathVariable Long id) {
+        if (holidayService.deleteHoliday(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
+
 }

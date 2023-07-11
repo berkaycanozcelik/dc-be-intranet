@@ -5,6 +5,8 @@ import com.demirtag.intranet.repository.HolidayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class HolidayService {
 
@@ -17,5 +19,26 @@ public class HolidayService {
 
     public Holiday saveHoliday(Holiday holiday){
         return holidayRepository.save(holiday);
+    }
+
+    public Holiday createHoliday(Holiday holiday) {
+        return holidayRepository.save(holiday);
+    }
+
+    public Optional<Holiday> getHoliday(Long id) {
+        return holidayRepository.findById(id);
+    }
+
+    public Holiday updateHoliday(Holiday holiday) {
+        return holidayRepository.save(holiday);
+    }
+
+    public boolean deleteHoliday(Long id) {
+        Optional<Holiday> holiday = holidayRepository.findById(id);
+        if (holiday.isPresent()) {
+            holidayRepository.delete(holiday.get());
+            return true;
+        }
+        return false;
     }
 }
