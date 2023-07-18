@@ -49,10 +49,12 @@ public class AuthenticationService {
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(user);
+        var expirationDate = Long.toString(jwtService.getExpirationDateFromToken(jwtToken));
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .role(user.getRole())
                 .id(user.getId())
+                .expirationDate(expirationDate)
                 .build();
     }
 }
