@@ -40,9 +40,18 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 4))
                 .signWith(getSingInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public long getExpirationDateFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getExpiration().getTime();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails){
