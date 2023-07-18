@@ -16,4 +16,5 @@ public class AuthenticationResponse {
     private Long id;
     private Role role;
     private String token;
+    private String expirationDate;
 }
