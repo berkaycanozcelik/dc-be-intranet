@@ -14,7 +14,7 @@ public class UserDetail {
 
     private String phoneNumber;
 
-    private String email;
+    private String job;
 
     @OneToOne(mappedBy = "userDetail"
             , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -23,10 +23,10 @@ public class UserDetail {
     public UserDetail() {
     }
 
-    public UserDetail(String address, String phoneNumber, String email, User user) {
+    public UserDetail(String address, String phoneNumber, String job, User user) {
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.email = email;
+        this.job = job;
         this.user = user;
     }
 
@@ -54,12 +54,12 @@ public class UserDetail {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmail() {
-        return email;
+    public String getJob() {
+        return job;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setJob(String job) {
+        this.job = job;
     }
 
     public User getUser() {
@@ -76,7 +76,7 @@ public class UserDetail {
                 "id=" + id +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
+                ", job='" + job + '\'' +
                 ", user=" + user +
                 '}';
     }
