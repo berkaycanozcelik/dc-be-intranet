@@ -2,7 +2,7 @@ package com.demirtag.intranet.model;
 
 public enum Role {
 
-    USER,
+    EMPLOYEE,
     MANAGER,
     ADMIN
 }
