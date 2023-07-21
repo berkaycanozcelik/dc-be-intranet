@@ -47,5 +47,10 @@ public class HolidayController {
         return ResponseEntity.ok(updatedHoliday);
     }
 
-//write me
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteHoliday(@PathVariable Long id){
+        Boolean deletedHoliday = holidayService.deleteHoliday(id);
+        return ResponseEntity.ok(deletedHoliday);
+    }
 }
