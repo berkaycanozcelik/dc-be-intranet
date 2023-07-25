@@ -24,13 +24,11 @@ public class UserDetail {
 
     private String birthday;
 
-    private byte[] imageData;
-
     private String title;
 
-    private String Manager;
+    private String manager;
 
-    private String Team;
+    private String team;
 
     @OneToOne(mappedBy = "userDetail"
             , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
