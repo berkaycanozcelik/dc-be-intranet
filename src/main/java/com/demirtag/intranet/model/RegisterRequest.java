@@ -21,4 +21,16 @@ public class RegisterRequest {
 
     private String password;
 
+    private String address;
+
+    private String phoneNumber;
+
+    private String birthday;
+
+    private String title;
+
+    private String manager;
+
+    private String team;
+
 }
