@@ -20,19 +20,30 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-
-    public RegisterResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .role(request.getRole())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+    public RegisterResponse register(RegisterRequest registerRequest) {
+        User registeredUser = User.builder()
+                .firstName(registerRequest.getFirstName())
+                .lastName(registerRequest.getLastName())
+                .role(registerRequest.getRole())
+                .email(registerRequest.getEmail())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .build();
 
-        repository.save(user);
+        UserDetail registeredUserDetail = UserDetail.builder()
+                .address(registerRequest.getAddress())
+                .phoneNumber(registerRequest.getPhoneNumber())
+                .birthday(registerRequest.getBirthday())
+                .title(registerRequest.getTitle())
+                .manager(registerRequest.getManager())
+                .team(registerRequest.getTeam())
+                .build();
 
-        var jwtToken = jwtService.generateToken(user);
+        registeredUser.setUserDetail(registeredUserDetail);
+        registeredUserDetail.setUser(registeredUser);
+
+        repository.save(registeredUser);
+
+        var jwtToken = jwtService.generateToken(registeredUser);
         return RegisterResponse.builder()
                 .token(jwtToken)
                 .build();
