@@ -1,5 +1,6 @@
 package com.demirtag.intranet.controller;
 
+import com.demirtag.intranet.model.RegisterRequest;
 import com.demirtag.intranet.model.User;
 import com.demirtag.intranet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+    public User updateUser(@PathVariable Long id, @RequestBody RegisterRequest updatedUser) {
         return userService.updateUser(id, updatedUser);
     }
 
