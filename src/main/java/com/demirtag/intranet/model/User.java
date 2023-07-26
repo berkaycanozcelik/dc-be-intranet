@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,6 +46,16 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user"
             , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Holiday> holidays;
+
+
+    public void addHoliday(Holiday holiday){
+        if (holidays == null){
+            holidays = new ArrayList<>();
+        }
+        holidays.add(holiday);
+
+        holiday.setUser(this);
+    }
 
     @JsonIgnore
     @Override
