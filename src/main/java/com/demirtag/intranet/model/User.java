@@ -34,7 +34,6 @@ public class User implements UserDetails {
     @JsonIgnore
     private  String password;
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_detail_id")
     private UserDetail userDetail;
