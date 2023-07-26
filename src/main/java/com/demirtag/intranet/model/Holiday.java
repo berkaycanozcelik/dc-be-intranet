@@ -1,7 +1,15 @@
 package com.demirtag.intranet.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "holiday")
 public class Holiday {
@@ -21,105 +29,4 @@ public class Holiday {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
-
-    public Holiday() {
-    }
-
-    public Holiday(String startDate, String endDate, int vacationWorkdays, String reason, boolean confirmation1, boolean confirmation2, String replacement, String status) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.vacationWorkdays = vacationWorkdays;
-        this.reason = reason;
-        this.confirmation1 = confirmation1;
-        this.confirmation2 = confirmation2;
-        this.replacement = replacement;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
-    public int getVacationWorkdays() {
-        return vacationWorkdays;
-    }
-
-    public void setVacationWorkdays(int vacationWorkdays) {
-        this.vacationWorkdays = vacationWorkdays;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public boolean isConfirmation1() {
-        return confirmation1;
-    }
-
-    public void setConfirmation1(boolean confirmation1) {
-        this.confirmation1 = confirmation1;
-    }
-
-    public boolean isConfirmation2() {
-        return confirmation2;
-    }
-
-    public void setConfirmation2(boolean confirmation2) {
-        this.confirmation2 = confirmation2;
-    }
-
-    public String getReplacement() {
-        return replacement;
-    }
-
-    public void setReplacement(String replacement) {
-        this.replacement = replacement;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Holiday{" +
-                "id=" + id +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", vacationWorkdays=" + vacationWorkdays +
-                ", reason='" + reason + '\'' +
-                ", confirmation1=" + confirmation1 +
-                ", confirmation2=" + confirmation2 +
-                ", replacement='" + replacement + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }
