@@ -44,7 +44,7 @@ public class User implements UserDetails {
     private VacationDays vacationDays;
 
     @OneToMany(mappedBy = "user"
-            , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+            , cascade = CascadeType.ALL)
     private List<Holiday> holidays;
 
 
