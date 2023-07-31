@@ -5,6 +5,7 @@ import com.demirtag.intranet.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,12 +35,14 @@ public class HolidayController {
         return holiday.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @Transactional
     @PostMapping
     public ResponseEntity<Holiday> createHoliday(@RequestBody Holiday holiday) {
         Holiday createdHoliday = holidayService.createHoliday(holiday);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHoliday);
     }
 
+    @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<Holiday> updateHoliday(@PathVariable Long id, @RequestBody Holiday holiday) {
         holiday.setId(id);
@@ -48,6 +51,7 @@ public class HolidayController {
     }
 
 
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteHoliday(@PathVariable Long id){
         Boolean deletedHoliday = holidayService.deleteHoliday(id);
