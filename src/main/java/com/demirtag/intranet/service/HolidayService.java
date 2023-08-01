@@ -1,6 +1,7 @@
 package com.demirtag.intranet.service;
 
 import com.demirtag.intranet.model.Holiday;
+import com.demirtag.intranet.model.User;
 import com.demirtag.intranet.repository.HolidayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class HolidayService {
 
     private final HolidayRepository holidayRepository;
+    private final UserService userService;
 
     @Autowired
-    public HolidayService(HolidayRepository holidayRepository) {
+    public HolidayService(HolidayRepository holidayRepository, UserService userService) {
         this.holidayRepository = holidayRepository;
+        this.userService = userService;
     }
 
     public Holiday saveHoliday(Holiday holiday){
@@ -23,6 +26,15 @@ public class HolidayService {
     }
 
     public Holiday createHoliday(Holiday holiday) {
+        return holidayRepository.save(holiday);
+    }
+
+    public Holiday createHolidayForUserById(Holiday holiday, Long userId) {
+
+        User user = userService.getUserById(userId);
+
+        user.addHoliday(holiday);
+
         return holidayRepository.save(holiday);
     }
 
