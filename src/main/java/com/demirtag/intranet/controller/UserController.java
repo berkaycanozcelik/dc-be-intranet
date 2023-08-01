@@ -1,9 +1,12 @@
 package com.demirtag.intranet.controller;
 
+import com.demirtag.intranet.model.Holiday;
 import com.demirtag.intranet.model.RegisterRequest;
 import com.demirtag.intranet.model.User;
+import com.demirtag.intranet.service.HolidayService;
 import com.demirtag.intranet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +19,12 @@ import java.util.List;
 public class UserController {
 
     private  final UserService userService;
+    private final HolidayService holidayService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, HolidayService holidayService) {
         this.userService = userService;
+        this.holidayService = holidayService;
     }
 
     @GetMapping
@@ -30,6 +35,21 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/holidays")
+    public List<Holiday> GetUserHolidaysById(@RequestParam Long id){
+
+        User user = userService.getUserById(id);
+
+        return user.getHolidays();
+    }
+
+    @Transactional
+    @PostMapping("/holiday")
+    public ResponseEntity<Holiday> createHolidayForUserById(@RequestBody Holiday holiday, @RequestParam Long userId) {
+        Holiday createdHoliday = holidayService.createHolidayForUserById(holiday, userId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdHoliday);
     }
 
     @Transactional
