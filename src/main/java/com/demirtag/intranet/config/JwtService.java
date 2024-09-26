@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "YOUR_SECRET_KEY";
+    private static final String key = "YOUR_key";
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -47,7 +47,7 @@ public class JwtService {
 
     public long getExpirationDateFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(key)
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -77,7 +77,7 @@ public class JwtService {
     }
 
     private Key getSingInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(key);
 
         return Keys.hmacShaKeyFor(keyBytes);
     }
